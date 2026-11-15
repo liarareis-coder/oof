@@ -1,0 +1,8 @@
+{
+  "name": "Arena Futebol",
+  "description": "Jogo de futebol arcade 2D com modos 1 Jogador vs IA, 2 Jogadores local e Multiplayer Online em tempo real.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

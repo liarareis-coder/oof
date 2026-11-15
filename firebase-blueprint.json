@@ -1,0 +1,269 @@
+{
+  "entities": {
+    "PlayerSave": {
+      "title": "PlayerSave",
+      "description": "Persistent player save data including preferences, career stats, and ranked EXP progress.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth user ID of the save owner."
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16,
+          "description": "Player nickname shown on the pitch and leaderboard."
+        },
+        "language": {
+          "type": "string",
+          "enum": ["pt-BR", "pt-PT", "en-US", "es"],
+          "description": "Selected interface language."
+        },
+        "exp": {
+          "type": "number",
+          "description": "Total ranked experience points."
+        },
+        "rankId": {
+          "type": "string",
+          "enum": [
+            "bronze",
+            "prata",
+            "ouro",
+            "diamante",
+            "platina",
+            "titanio",
+            "legend",
+            "supersonic-legend",
+            "champion",
+            "supersonic-champion"
+          ],
+          "description": "Current ranked tier identifier."
+        },
+        "rankedWins": {
+          "type": "number",
+          "description": "Total ranked wins."
+        },
+        "rankedLosses": {
+          "type": "number",
+          "description": "Total ranked losses."
+        },
+        "rankedDraws": {
+          "type": "number",
+          "description": "Total ranked draws."
+        },
+        "totalMatches": {
+          "type": "number",
+          "description": "Total matches played across modes."
+        },
+        "totalGoals": {
+          "type": "number",
+          "description": "Total team goals scored."
+        },
+        "preferredMode": {
+          "type": "string",
+          "enum": ["1p", "2p", "training", "online"],
+          "description": "Last selected game mode."
+        },
+        "preferredTeamSize": {
+          "type": "number",
+          "enum": [1, 2, 4, 8],
+          "description": "Last selected team size."
+        },
+        "muted": {
+          "type": "boolean",
+          "description": "Audio mute preference."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when save profile was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of the latest save update."
+        }
+      },
+      "required": [
+        "uid",
+        "displayName",
+        "language",
+        "exp",
+        "rankId",
+        "rankedWins",
+        "rankedLosses",
+        "rankedDraws",
+        "totalMatches",
+        "totalGoals",
+        "preferredMode",
+        "preferredTeamSize",
+        "muted",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "MatchRecord": {
+      "title": "MatchRecord",
+      "description": "Immutable match history record saved under a player save.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Owner UID."
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["1p", "2p", "training", "online"],
+          "description": "Game mode."
+        },
+        "isRanked": {
+          "type": "boolean",
+          "description": "Whether the match affected ranked EXP."
+        },
+        "teamSize": {
+          "type": "number",
+          "enum": [1, 2, 4, 8],
+          "description": "Team size format."
+        },
+        "blueScore": {
+          "type": "number",
+          "description": "Blue team final score."
+        },
+        "redScore": {
+          "type": "number",
+          "description": "Red team final score."
+        },
+        "result": {
+          "type": "string",
+          "enum": ["win", "loss", "draw"],
+          "description": "Outcome from player perspective."
+        },
+        "expDelta": {
+          "type": "number",
+          "description": "Ranked EXP gained or lost."
+        },
+        "rankAfter": {
+          "type": "string",
+          "enum": [
+            "bronze",
+            "prata",
+            "ouro",
+            "diamante",
+            "platina",
+            "titanio",
+            "legend",
+            "supersonic-legend",
+            "champion",
+            "supersonic-champion"
+          ],
+          "description": "Rank tier after the match."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of the match completion."
+        }
+      },
+      "required": [
+        "uid",
+        "mode",
+        "isRanked",
+        "teamSize",
+        "blueScore",
+        "redScore",
+        "result",
+        "expDelta",
+        "rankAfter",
+        "createdAt"
+      ]
+    },
+    "RankedLeaderboardEntry": {
+      "title": "RankedLeaderboardEntry",
+      "description": "Public ranked leaderboard entry without PII.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID."
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16,
+          "description": "Public player nickname."
+        },
+        "exp": {
+          "type": "number",
+          "description": "Total ranked EXP."
+        },
+        "rankId": {
+          "type": "string",
+          "enum": [
+            "bronze",
+            "prata",
+            "ouro",
+            "diamante",
+            "platina",
+            "titanio",
+            "legend",
+            "supersonic-legend",
+            "champion",
+            "supersonic-champion"
+          ],
+          "description": "Current ranked tier ID."
+        },
+        "rankedWins": {
+          "type": "number",
+          "description": "Ranked wins count."
+        },
+        "rankedMatches": {
+          "type": "number",
+          "description": "Total ranked matches played."
+        },
+        "totalGoals": {
+          "type": "number",
+          "description": "Total goals scored."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last leaderboard sync timestamp."
+        }
+      },
+      "required": [
+        "uid",
+        "displayName",
+        "exp",
+        "rankId",
+        "rankedWins",
+        "rankedMatches",
+        "totalGoals",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/saves/{userId}": {
+      "schema": { "$ref": "#/entities/PlayerSave" },
+      "description": "Private player save document keyed by Firebase Auth UID."
+    },
+    "/saves/{userId}/matches/{matchId}": {
+      "schema": { "$ref": "#/entities/MatchRecord" },
+      "description": "Player match history subcollection owned by userId."
+    },
+    "/leaderboard/{userId}": {
+      "schema": { "$ref": "#/entities/RankedLeaderboardEntry" },
+      "description": "Public ranked standings entry without personal email/PII."
+    }
+  }
+}
